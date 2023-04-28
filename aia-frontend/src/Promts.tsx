@@ -24,10 +24,9 @@ async function getChatGPTResponse(prompt: string): Promise<string> {
 }
 
 // Usage example:
-const prompt = 'Hello, ChatGPT!';
-const apiKey = 'your-openai-api-key-here';
+const prompt_example = 'Hello, ChatGPT!';
 
 (async () => {
-  const response = await getChatGPTResponse(prompt, apiKey);
+  const response = await getChatGPTResponse(prompt_example);
   console.log(response);
 })();
