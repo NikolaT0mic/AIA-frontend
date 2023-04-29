@@ -1,45 +1,55 @@
 import {
-  ChakraProvider,
-  Box,
-  Grid,
-  theme,
-  Input,
+    ChakraProvider,
+    Box,
+    Grid,
+    theme,
+    Input,
 } from "@chakra-ui/react"
 import ChatbotResponseBubble from "./components/ChatbotResponseBubble"
 import UserResponseBubble from "./components/UserResponseBubble"
-import WebsiteAppBar from "./components/Appbar"
 import UserInput from "./components/UserInput"
 import * as React from "react"
+import SidebarWithHeader from "./components/SidebarWithHeader";
+import {send_url} from "./util/api_service";
+
 
 export function App() {
-  const [chatMessages, setMessages] = React.useState<string[]>([]);
-  const addMessageFunc = (message: string) => {
-    setMessages([...chatMessages, message])
-    console.log(chatMessages)
-  }
+    const [chatMessages, setMessages] = React.useState<string[]>([]);
+    const addMessageFunc = (message: string) => {
+        let result = [...chatMessages, message];
+        send_url(message).then(
+            (response) => response.text()
+        ).then(summary => {
+            result = [...chatMessages, message, summary];
+        }).catch((e => {
+            result = [...chatMessages, message, e];
+        }));
+        setMessages([...chatMessages, message]);
+    }
 
-  return (
-    <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <WebsiteAppBar></WebsiteAppBar>
-          {/* <ColorModeSwitcher justifySelf="flex-end" /> */}
-          <Box display="flex" flexDirection="column" justifySelf="center" width="800px" height="500px" overflowY="auto" borderWidth="1px" borderColor="gray.200"
-            borderRadius="md" p={4} >
-            {chatMessages.map(function (message, index) {
-              if (index === 0 || index % 2 === 0) {
-                return (
-                  <ChatbotResponseBubble message={message} />
-                )
-              }
-              return (
-                <UserResponseBubble message={message} />
-              )
-            })}
-          </Box>
-          <UserInput addMessageFunc={addMessageFunc} />
-        </Grid>
-      </Box>
-    </ChakraProvider>
-  )
+    return (
+        <ChakraProvider theme={theme}>
+            <SidebarWithHeader>
+                <Grid minH="100vh" p={3}>
+
+                    {/* <ColorModeSwitcher justifySelf="flex-end" /> */}
+                    <Box display="flex" flexDirection="column" justifySelf="center" width="800px" height="500px"
+                         overflowY="auto" borderWidth="1px" borderRadius="20px" borderColor="gray.200"
+                         p={4} bg="white">
+                        {chatMessages.map(function (message, index) {
+                            if (index === 0 || index % 2 === 0) {
+                                return (
+                                    <ChatbotResponseBubble message={message}/>
+                                )
+                            }
+                            return (
+                                <UserResponseBubble message={message}/>
+                            )
+                        })}
+                    </Box>
+                    <UserInput addMessageFunc={addMessageFunc}/>
+                </Grid>
+            </SidebarWithHeader>
+        </ChakraProvider>
+    )
 }

@@ -39,6 +39,7 @@ function UserInput({ addMessageFunc }: UserInputProps) {
                     placeholder='Here is a sample placeholder'
                     size='sm'
                     justifySelf="center"
+                    bg="white"
                 />
                 <InputRightElement onClick={iconClick} children={<CheckIcon color='green.500' alignSelf="center" />} />
             </InputGroup>
