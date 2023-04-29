@@ -14,7 +14,7 @@ import * as React from "react"
 export function App() {
   const [chatMessages, setMessages] = React.useState<string[]>([]);
   const addMessageFunc = (message: string) => {
-    setMessages([ ...chatMessages, message])
+    setMessages([...chatMessages, message])
     console.log(chatMessages)
   }
 
@@ -26,25 +26,19 @@ export function App() {
           {/* <ColorModeSwitcher justifySelf="flex-end" /> */}
           <Box justifySelf="center" justifyContent="center" width="800px" height="500px" overflowY="auto" borderWidth="1px" borderColor="gray.200"
             borderRadius="md" p={4} verticalAlign="middle">
-            <ChatbotResponseBubble message="test1"/>
-            <UserResponseBubble message="test1"/>
-            <ChatbotResponseBubble message="test2"/>
-            <UserResponseBubble message="test2"/>
-            <ChatbotResponseBubble message="test3"/>
-            <UserResponseBubble message="test3"/>
-              {chatMessages.map(function (message, index) {
-                if(index === 0 || index%2===0) {
-                  return (
-                    <ChatbotResponseBubble message={message} />
-                  )
-                }
+            {chatMessages.map(function (message, index) {
+              if (index === 0 || index % 2 === 0) {
                 return (
-                  <UserResponseBubble message={message} />
+                  <ChatbotResponseBubble message={message} />
                 )
-              })}
-              
+              }
+              return (
+                <UserResponseBubble message={message} />
+              )
+            })}
+
           </Box>
-          <UserInput addMessageFunc={addMessageFunc}/>
+          <UserInput addMessageFunc={addMessageFunc} />
         </Grid>
       </Box>
     </ChakraProvider>
