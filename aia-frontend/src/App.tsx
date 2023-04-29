@@ -21,10 +21,11 @@ export function App() {
             (response) => response.text()
         ).then(summary => {
             result = [...chatMessages, message, summary];
+            setMessages(result);
         }).catch((e => {
             result = [...chatMessages, message, e];
+            setMessages(result);
         }));
-        setMessages([...chatMessages, message]);
     }
 
     return (
