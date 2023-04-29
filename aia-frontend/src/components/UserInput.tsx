@@ -16,7 +16,14 @@ function UserInput({ addMessageFunc }: UserInputProps) {
     const [value, setValue] = React.useState('')
     const handleChange = (event: { target: { value: React.SetStateAction<string> } }) => setValue(event.target.value)
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && value !== "") {
+            addMessageFunc(value);
+            setValue('');
+        }
+    }
+
+    const iconClick = () => {
+        if (value !== "") {
             addMessageFunc(value);
             setValue('');
         }
@@ -24,16 +31,16 @@ function UserInput({ addMessageFunc }: UserInputProps) {
 
     return (
         <>
-            <InputGroup maxWidth="80%" justifySelf="center">
+            <InputGroup maxWidth="80%" justifySelf="center" alignContent="center">
                 <Input
                     value={value}
                     onChange={handleChange}
                     onKeyDown={handleKeyDown}
                     placeholder='Here is a sample placeholder'
                     size='sm'
-                    justifySelf="center" 
+                    justifySelf="center"
                 />
-                <InputRightElement children={<CheckIcon color='green.500' />} />
+                <InputRightElement onClick={iconClick} children={<CheckIcon color='green.500' alignSelf="center" />} />
             </InputGroup>
         </>
     )
