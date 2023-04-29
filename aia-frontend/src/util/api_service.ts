@@ -15,3 +15,18 @@ export async function send_url(url: string): Promise<Response> {
         throw new Error(`Failed to connect to server: ${error.message}`);
     }
 }
+
+export async function send_businesscase(use_case: string): Promise<Response> {
+    try {
+        return await fetch(BASE_URL + "/init/use_case", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"case_description": use_case})
+        });
+    } catch (error:any) {
+        throw new Error(`Failed to connect to server: ${error.message}`);
+    }
+}
