@@ -24,14 +24,14 @@ function UserInput({ addMessageFunc }: UserInputProps) {
 
     return (
         <>
-            <InputGroup>
+            <InputGroup maxWidth="80%" justifySelf="center">
                 <Input
                     value={value}
                     onChange={handleChange}
                     onKeyDown={handleKeyDown}
                     placeholder='Here is a sample placeholder'
                     size='sm'
-                    justifySelf="center" maxWidth="80%"
+                    justifySelf="center" 
                 />
                 <InputRightElement children={<CheckIcon color='green.500' />} />
             </InputGroup>

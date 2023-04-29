@@ -24,8 +24,8 @@ export function App() {
         <Grid minH="100vh" p={3}>
           <WebsiteAppBar></WebsiteAppBar>
           {/* <ColorModeSwitcher justifySelf="flex-end" /> */}
-          <Box justifySelf="center" justifyContent="center" width="800px" height="500px" overflowY="auto" borderWidth="1px" borderColor="gray.200"
-            borderRadius="md" p={4} verticalAlign="middle">
+          <Box display="flex" flexDirection="column" justifySelf="center" width="800px" height="500px" overflowY="auto" borderWidth="1px" borderColor="gray.200"
+            borderRadius="md" p={4} >
             {chatMessages.map(function (message, index) {
               if (index === 0 || index % 2 === 0) {
                 return (
@@ -36,7 +36,6 @@ export function App() {
                 <UserResponseBubble message={message} />
               )
             })}
-
           </Box>
           <UserInput addMessageFunc={addMessageFunc} />
         </Grid>
