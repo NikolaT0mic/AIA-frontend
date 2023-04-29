@@ -68,7 +68,6 @@ export function App() {
     } else {
       result = [...chatMessages, message];
       setAnswer([...answers, message])
-      setQuestions(questions.slice(1));
       setMessages(result);
       console.log(answers);
       console.log("Now send to server")
