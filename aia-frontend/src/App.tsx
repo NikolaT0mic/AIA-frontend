@@ -58,7 +58,7 @@ export function App() {
         setMessages(result);
         setLoad(false);
       }));
-    } else if(questions.length > 1) {
+    } else if(questions.length > 0) {
       result = [...chatMessages, message, questions[0]];
       setAnswer([...answers, message])
       setQuestions(questions.slice(1));
@@ -66,7 +66,7 @@ export function App() {
       console.log(answers);
       setLoad(false);
     } else {
-      result = [...chatMessages, message, questions[0]];
+      result = [...chatMessages, message];
       setAnswer([...answers, message])
       setQuestions(questions.slice(1));
       setMessages(result);
