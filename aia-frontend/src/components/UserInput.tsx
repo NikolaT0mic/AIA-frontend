@@ -31,7 +31,7 @@ function UserInput({ addMessageFunc }: UserInputProps) {
 
     return (
         <>
-            <InputGroup maxWidth="80%" justifySelf="center" alignContent="center">
+            <InputGroup maxWidth="80%" justifySelf="center" alignContent="center" borderRadius="20px" mt="40px">
                 <Input
                     value={value}
                     onChange={handleChange}
@@ -40,6 +40,8 @@ function UserInput({ addMessageFunc }: UserInputProps) {
                     size='sm'
                     justifySelf="center"
                     bg="white"
+                    borderRadius="20px"
+                    height="38px"
                 />
                 <InputRightElement onClick={iconClick} children={<CheckIcon color='green.500' alignSelf="center" />} />
             </InputGroup>

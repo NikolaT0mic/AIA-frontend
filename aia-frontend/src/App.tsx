@@ -32,6 +32,8 @@ export function App() {
   const addMessageFunc = (message: string) => {
     let result = [...chatMessages, message];
     setLoad(true);
+    result = [...chatMessages, message];
+    setMessages(result);
     if (message.includes("https://")) {
       send_url(message).then(
         (response) => response.text()
@@ -58,7 +60,7 @@ export function App() {
         const questions = jsonArray.map(obj => obj.question);
 
         console.log(questions);
-        result = [...chatMessages, message, questions[0]];
+        result = [...chatMessages, message, ("I analyzed your business case and collected some questions. " + questions[0])];
         setQuestions(questions);
         setMessages(result);
         setLoad(false);
@@ -133,12 +135,14 @@ export function App() {
     emptyColor='gray.200'
     color='blue.500'
     size='xl'
+    marginX='auto'
+    marginTop='30px'
   />;
 
   return (
     <ChakraProvider theme={theme}>
       <SidebarWithHeader>
-        <Grid minH="100vh" p={3}>
+        <Grid minH="70vh" p={3} >
           {/* <ColorModeSwitcher justifySelf="flex-end" /> */}
           <Box display="flex" flexDirection="column" justifySelf="center" width="800px" height="500px"
             overflowY="auto" borderWidth="1px" borderRadius="20px" borderColor="gray.200"
@@ -154,7 +158,7 @@ export function App() {
               )
             })
             }
-            {loading ? spinner : <></>}
+            {loading ? spinner : null}
           </Box>
           <UserInput addMessageFunc={addMessageFunc} />
         </Grid>
