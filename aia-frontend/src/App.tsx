@@ -13,13 +13,16 @@ import * as React from "react"
 import SidebarWithHeader from "./components/SidebarWithHeader";
 import { send_businesscase, send_replyies, send_url } from "./util/api_service";
 
+interface ReplyObject {
+  question: string;
+  answer: string;
+}
+
+let replys: ReplyObject[] = [];
 
 export function App() {
-  interface ReplyObject {
-    question: string;
-    answer: string;
-  }
-  let replys: ReplyObject[] = [];
+  
+  
 
   const [loading, setLoad] = React.useState<boolean>();
   const [chatMessages, setMessages] = React.useState<string[]>(["Enter a website url so I can find resources and understand what kind of Bussiness you have. If you do not have a website you can just input your businesscase"]);
@@ -84,6 +87,8 @@ export function App() {
       setLoad(false);
       setQuestions(questions.slice(1));
     } else {
+      console.log("Replys before")
+      console.log(replys)
       if (message !== "") {
         const replyObject: ReplyObject = {
           question: questions[0],
