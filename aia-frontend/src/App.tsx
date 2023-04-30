@@ -111,15 +111,17 @@ export function App() {
 
       console.log("Json")
       console.log(JSON.stringify(replys))
+      setLoad(true);
 
       send_replyies(JSON.stringify(replys)).then(
-        (response) => response.text()
-      ).then(summary => {
-        console.log("This worked "+{summary})
+        (response) => response.json()
+      ).then((summary) => {
+        result = [...chatMessages, message, summary['solution']];
+        setMessages(result);
+        setLoad(false);
       }).catch((e => {
-        console.log("somsing wrong")
+        console.log("somsing wrong");
       }));
-
       setLoad(false);
     }
   }
