@@ -11,10 +11,16 @@ import UserResponseBubble from "./components/UserResponseBubble"
 import UserInput from "./components/UserInput"
 import * as React from "react"
 import SidebarWithHeader from "./components/SidebarWithHeader";
-import { send_businesscase, send_url } from "./util/api_service";
+import { send_businesscase, send_replyies, send_url } from "./util/api_service";
 
 
 export function App() {
+  interface ReplyObject {
+    question: string;
+    answer: string;
+  }
+  let replys: ReplyObject[] = [];
+
   const [loading, setLoad] = React.useState<boolean>();
   const [chatMessages, setMessages] = React.useState<string[]>(["Enter a website url so I can find resources and understand what kind of Bussiness you have. If you do not have a website you can just input your businesscase"]);
   const [questions, setQuestions] = React.useState<string[]>([]);
@@ -50,7 +56,7 @@ export function App() {
 
         console.log(questions);
         result = [...chatMessages, message, questions[0]];
-        setQuestions(questions.slice(1));
+        setQuestions(questions);
         setMessages(result);
         setLoad(false);
       }).catch((e => {
@@ -58,19 +64,57 @@ export function App() {
         setMessages(result);
         setLoad(false);
       }));
-    } else if(questions.length > 0) {
-      result = [...chatMessages, message, questions[0]];
+    } else if (questions.length > 1) {
+      if (message !== "") {
+        const replyObject: ReplyObject = {
+          question: questions[0],
+          answer: message
+        }
+        // replys = [...replys, replyObject];
+        replys.push(replyObject)
+      }
+
+      console.log("Replys")
+      console.log(replys)
+
+      result = [...chatMessages, message, questions[1]];
       setAnswer([...answers, message])
-      setQuestions(questions.slice(1));
       setMessages(result);
       console.log(answers);
       setLoad(false);
+      setQuestions(questions.slice(1));
     } else {
+      if (message !== "") {
+        const replyObject: ReplyObject = {
+          question: questions[0],
+          answer: message
+        }
+        // replys = [...replys, replyObject];
+        replys.push(replyObject)
+      }
+
+      console.log("Replys")
+      console.log(replys)
+
+      setQuestions(questions.slice(1));
+
       result = [...chatMessages, message];
       setAnswer([...answers, message])
       setMessages(result);
       console.log(answers);
       console.log("Now send to server")
+
+      console.log("Json")
+      console.log(JSON.stringify(replys))
+
+      send_replyies(JSON.stringify(replys)).then(
+        (response) => response.text()
+      ).then(summary => {
+        console.log("This worked "+{summary})
+      }).catch((e => {
+        console.log("somsing wrong")
+      }));
+
       setLoad(false);
     }
   }

@@ -30,3 +30,18 @@ export async function send_businesscase(use_case: string): Promise<Response> {
         throw new Error(`Failed to connect to server: ${error.message}`);
     }
 }
+
+export async function send_replyies(replys: string): Promise<Response> {
+    try {
+        return await fetch(BASE_URL + "/process_replies", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(replys)
+        });
+    } catch (error:any) {
+        throw new Error(`Failed to connect to server: ${error.message}`);
+    }
+}
